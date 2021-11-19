@@ -23,7 +23,7 @@ class ResultDialog {
             backgroundColor: correct ? Colors.green : Colors.red,
             child: Icon(
               correct ? Icons.check : Icons.close,
-              color: Colors.grey.shade900,
+              color: Colors.purple,
             ),
           ),
           content: Column(

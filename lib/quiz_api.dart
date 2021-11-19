@@ -10,9 +10,9 @@ class QuizApi {
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        return List<Question>.from(data["questions"].map(
-            (x) => Question(answer1: x, answer2: x, question: x).fromMap(x)));
+        var data = await json.decode(json.encode(response.body));
+        return List<Question>.from(data["questions"].map((x) =>
+            Question(answer1: 'c', answer2: 'b', question: 'a').fromMap(x)));
       } else {
         List<Question> a = [];
         return a;

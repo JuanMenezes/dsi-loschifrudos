@@ -14,7 +14,7 @@ class FinishDialog {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.grey.shade900,
+          backgroundColor: Colors.purple,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10.0),
@@ -25,7 +25,7 @@ class FinishDialog {
             maxRadius: 35.0,
             child: Icon(
               hitNumber < 6 ? Icons.warning : Icons.favorite,
-              color: Colors.grey.shade900,
+              color: Colors.purple,
             ),
           ),
           content: Column(

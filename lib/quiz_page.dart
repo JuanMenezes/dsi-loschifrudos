@@ -37,11 +37,11 @@ class _QuizPageState extends State<QuizPage> {
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,
         title: Text(
-            'QUIZ COVID-19 ( ${_scoreKeeper.length}/${_controller.questionsNumber} )'),
+            'Quiz ENADE ( ${_scoreKeeper.length}/${_controller.questionsNumber} )'),
         centerTitle: true,
         elevation: 0.0,
       ),
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Colors.purple,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -98,7 +98,7 @@ class _QuizPageState extends State<QuizPage> {
         child: GestureDetector(
           child: Container(
             padding: EdgeInsets.all(4.0),
-            color: Colors.blue,
+            color: Colors.purple,
             child: Center(
               child: AutoSizeText(
                 answer,
