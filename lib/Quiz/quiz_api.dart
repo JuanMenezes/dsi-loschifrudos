@@ -1,6 +1,6 @@
 import 'dart:convert' show json;
 import 'package:http/http.dart' as http;
-import 'questions.dart';
+import './questions.dart';
 
 class QuizApi {
   Future<List<Question>> getData() async {
