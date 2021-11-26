@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class TelaCadastro extends StatelessWidget {
   static String id = 'cadastro';
+  
 
   @override
   Widget build(BuildContext context) {

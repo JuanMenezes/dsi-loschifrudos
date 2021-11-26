@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'Telas/cadastro.dart';
-import 'Telas/tela_inicial.dart';
+//import 'Telas/cadastro.dart';
+//import 'Telas/tela_inicial.dart';
+import 'Telas/test.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: HomeScreen.id,
       routes: {
-        HomeScreen.id: (context) => HomeScreen(title: 'MeNota.Ai'),
+        HomeScreen.id: (context) => const HomeScreen(title: 'MeNota.Ai'),
         TelaCadastro.id: (context) => TelaCadastro(),
       }
     );
