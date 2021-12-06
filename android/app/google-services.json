@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "348449107451",
+    "project_id": "menot-ca305",
+    "storage_bucket": "menot-ca305.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348449107451:android:1f3972100c4bf36596af5e",
+        "android_client_info": {
+          "package_name": "com.menotaai.loschifrudos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348449107451-7808t5rksv93tq7997n0bjrqotb6lok4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8L-R7oG6XO7--m2MUHrC2MkFUCFPRtY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348449107451-7808t5rksv93tq7997n0bjrqotb6lok4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
