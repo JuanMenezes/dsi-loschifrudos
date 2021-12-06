@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'cadastro.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -6,11 +7,16 @@ class HomeScreen extends StatefulWidget {
 
   final String title;
 
+
   @override
   State<HomeScreen> createState() => _HomeScreen();
 }
 
 class _HomeScreen extends State<HomeScreen> {
+
+  late String matricula;
+  late String senha;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +30,9 @@ class _HomeScreen extends State<HomeScreen> {
                   autofocus: true,
                   keyboardType: TextInputType.number,
                   style: const TextStyle(color: Colors.white, fontSize: 20),
+                  onChanged: (value) {
+                    matricula = value;
+                  },
                   decoration: const InputDecoration(
                       labelText: "Matrícula",
                       labelStyle: TextStyle(color: Colors.white)),
@@ -34,6 +43,9 @@ class _HomeScreen extends State<HomeScreen> {
                   obscureText: true,
                   keyboardType: TextInputType.visiblePassword,
                   style: const TextStyle(color: Colors.white, fontSize: 20),
+                  onChanged: (value) {
+                    senha = value;
+                  },
                   decoration: const InputDecoration(
                       labelText: "Senha",
                       labelStyle: TextStyle(color: Colors.white)),
@@ -43,7 +55,9 @@ class _HomeScreen extends State<HomeScreen> {
                   children: <Widget>[
                     Expanded(
                         child: ElevatedButton(
-                          onPressed: () => {},
+                          onPressed: () => {
+
+                          },
                           style: ElevatedButton.styleFrom(
                               fixedSize: const Size(210, 40),
                               shape: RoundedRectangleBorder(
@@ -58,7 +72,9 @@ class _HomeScreen extends State<HomeScreen> {
                       child: ElevatedButton(
                         child: const Text("Cadastro",
                             style: TextStyle(color: Colors.purple)),
-                        onPressed: () => {},
+                        onPressed: () => {
+                          Navigator.pushNamed(context, TelaCadastro.id)
+                        },
                         style: ElevatedButton.styleFrom(
                             fixedSize: const Size(210, 30),
                             shape: RoundedRectangleBorder(
@@ -72,65 +88,5 @@ class _HomeScreen extends State<HomeScreen> {
             ),
           ),
         ));
-  }
-
-  void cadastro() {
-    Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (BuildContext context) {
-        return Scaffold(
-          backgroundColor: Colors.purple,
-          body: Padding(
-              padding: const EdgeInsets.all(9),
-              child: Center(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextFormField(
-                          autofocus: true,
-                          keyboardType: TextInputType.number,
-                          style: const TextStyle(color: Colors.white, fontSize: 20),
-                          decoration: const InputDecoration(
-                              labelText: "Matrícula",
-                              labelStyle: TextStyle(color: Colors.white)),
-                        ),
-                        const Divider(),
-                        TextFormField(
-                          autofocus: true,
-                          keyboardType: TextInputType.visiblePassword,
-                          style: const TextStyle(color: Colors.white, fontSize: 20),
-                          decoration: const InputDecoration(
-                              labelText: "Nome Completo",
-                              labelStyle: TextStyle(color: Colors.white)),
-                        ),
-                        TextFormField(
-                          autofocus: true,
-                          keyboardType: TextInputType.visiblePassword,
-                          style: const TextStyle(color: Colors.white, fontSize: 20),
-                          decoration: const InputDecoration(
-                              labelText: "Senha",
-                              labelStyle: TextStyle(color: Colors.white)),
-                        ),
-                        const Divider(),
-                        ButtonTheme(
-                          minWidth: 20.0,
-                          height: 30.0,
-                          child: ElevatedButton(
-                            onPressed: () => {},
-                            style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(200, 40),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50)),
-                                primary: Colors.white),
-                            child: const Text(
-                              "Salvar",
-                              style: TextStyle(color: Colors.purple),
-                            ),
-                          ),
-                        )
-                      ]))),
-        );
-      },
-    ));
   }
 }
