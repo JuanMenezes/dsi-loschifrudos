@@ -1,16 +1,20 @@
+// ignore_for_file: must_be_immutable, avoid_print, unused_import
+
 import 'package:flutter/material.dart';
-import 'tela_inicial.dart';
+import 'TelaEntrar.dart';
+import 'dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class TelaCadastro extends StatelessWidget {
   static String id = 'cadastro';
-
   final _auth = FirebaseAuth.instance;
-  late String cpf;
+  late String email;
   late String nome;
   late String senha;
 
   TelaCadastro({Key? key}) : super(key: key);
+
+
 
 
 
@@ -27,10 +31,10 @@ class TelaCadastro extends StatelessWidget {
                   children: <Widget>[
                     TextFormField(
                       autofocus: true,
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.emailAddress,
                       style: const TextStyle(color: Colors.white, fontSize: 20),
                       onChanged: (value) {
-                        cpf = value;
+                        email = value;
                       },
                       decoration: const InputDecoration(
                           labelText: "Email",
@@ -57,8 +61,8 @@ class TelaCadastro extends StatelessWidget {
                           try {
                             await _auth
                                 .createUserWithEmailAndPassword(
-                                email: cpf, password: senha);
-                            Navigator.pushNamed(context, HomeScreen.id);
+                                email: email, password: senha);
+                            Navigator.pushNamed(context, Dashboard.id);
                           } catch (e) {
                             print (e);
                           }

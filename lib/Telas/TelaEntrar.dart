@@ -1,20 +1,22 @@
+// ignore_for_file: file_names, avoid_print
 import 'package:flutter/material.dart';
 import 'cadastro.dart';
-
-class HomeScreen extends StatefulWidget {
+import 'dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+class Entrar extends StatefulWidget {
   static String id = 'home_screen';
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
+  const Entrar({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
 
   @override
-  State<HomeScreen> createState() => _HomeScreen();
+  State<Entrar> createState() => _Entrar();
 }
 
-class _HomeScreen extends State<HomeScreen> {
-
-  late String matricula;
+class _Entrar extends State<Entrar> {
+  final _auth = FirebaseAuth.instance;
+  late String email;
   late String senha;
 
   @override
@@ -28,13 +30,13 @@ class _HomeScreen extends State<HomeScreen> {
               children: <Widget>[
                 TextFormField(
                   autofocus: true,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.emailAddress,
                   style: const TextStyle(color: Colors.white, fontSize: 20),
                   onChanged: (value) {
-                    matricula = value;
+                    email = value;
                   },
                   decoration: const InputDecoration(
-                      labelText: "Matrícula",
+                      labelText: "Email",
                       labelStyle: TextStyle(color: Colors.white)),
                 ),
                 const Divider(),
@@ -55,8 +57,13 @@ class _HomeScreen extends State<HomeScreen> {
                   children: <Widget>[
                     Expanded(
                         child: ElevatedButton(
-                          onPressed: () => {
-
+                          onPressed: () async {
+                            try {
+                              await _auth.signInWithEmailAndPassword (email: email, password: senha);
+                              Navigator.pushNamed(context, Dashboard.id);
+                            } on Exception catch (e) {
+                              print (e);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               fixedSize: const Size(210, 40),
@@ -64,7 +71,7 @@ class _HomeScreen extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(50)),
                               primary: Colors.white),
                           child: const Text(
-                            "Login",
+                            "Entrar",
                             style: TextStyle(color: Colors.purple),
                           ),
                         )),

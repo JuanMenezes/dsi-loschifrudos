@@ -1,18 +1,24 @@
+// ignore_for_file: sized_box_for_whitespace, unused_import, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'Menu.dart';
 
-final List<Data> data_graph = [
+final List<Data> dataGraph = [
   Data('2020', 50, Colors.blue),
   Data('2019', 60, Colors.orange),
   Data('2017', 30, Colors.green),
   Data('2018', 24, Colors.red),
 ];
 
-@override
+
 class Dashboard extends StatefulWidget {
   Dashboard({required this.title});
+  static String id = 'Dashboard';
 
   final String title;
 
@@ -29,6 +35,18 @@ class Data {
 }
 
 class _Dashboard extends State<Dashboard> {
+  final _auth = FirebaseAuth.instance;
+
+
+  void getUsuario () async {
+    try {
+      final user =  _auth.currentUser!;
+      print(user.email);
+    } catch (e) {
+      print (e);
+    }
+
+  }
   Material myTextItems(String title, String subtitle) {
     return Material(
       color: Colors.white,
@@ -37,7 +55,7 @@ class _Dashboard extends State<Dashboard> {
       shadowColor: Colors.deepPurple,
       child: Center(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -45,20 +63,20 @@ class _Dashboard extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.deepPurple,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       subtitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30.0,
                       ),
                     ),
@@ -80,7 +98,7 @@ class _Dashboard extends State<Dashboard> {
       shadowColor: Colors.deepPurple,
       child: Center(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -88,25 +106,25 @@ class _Dashboard extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.deepPurple,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       subtitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30.0,
                       ),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(8.0),
                   ),
                 ],
@@ -119,7 +137,7 @@ class _Dashboard extends State<Dashboard> {
   }
 
   Material mychart1Items(String title, String priceVal, String subtitle) {
-    final List<Data> data_graph = [
+    final List<Data> dataGraph = [
       Data('2020', 50, Colors.blue),
       Data('2019', 60, Colors.orange),
       Data('2017', 30, Colors.green),
@@ -127,7 +145,7 @@ class _Dashboard extends State<Dashboard> {
     ];
     List<charts.Series<Data, String>> series = [
       charts.Series(
-          data: data_graph,
+          data: dataGraph,
           id: 'Alunos',
           domainFn: (Data pops, _) => pops.ano,
           measureFn: (Data pops, _) => pops.alunos,
@@ -141,7 +159,7 @@ class _Dashboard extends State<Dashboard> {
       shadowColor: Colors.deepPurple,
       child: Center(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -149,36 +167,36 @@ class _Dashboard extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.all(1.0),
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.deepPurple,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.all(1.0),
                     child: Text(
                       priceVal,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30.0,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.all(1.0),
                     child: Text(
                       subtitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.deepPurple,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.all(1.0),
                     child: Container(
                         height: 130, // height of the Container widget
                         width: 190,
@@ -195,7 +213,7 @@ class _Dashboard extends State<Dashboard> {
 
   Material mychart2Items(String title, String priceVal, String subtitle) {
     // é só editar aqui para o outro gráfico
-    final List<Data> data_graph = [
+    final List<Data> dataGraph = [
       Data('2020', 50, Colors.blue),
       Data('2019', 60, Colors.orange),
       Data('2017', 30, Colors.green),
@@ -203,7 +221,7 @@ class _Dashboard extends State<Dashboard> {
     ];
     List<charts.Series<Data, String>> series = [
       charts.Series(
-          data: data_graph,
+          data: dataGraph,
           id: 'Alunos',
           domainFn: (Data pops, _) => pops.ano,
           measureFn: (Data pops, _) => pops.alunos,
@@ -217,7 +235,7 @@ class _Dashboard extends State<Dashboard> {
       shadowColor: Colors.deepPurple,
       child: Center(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -225,17 +243,17 @@ class _Dashboard extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.all(1.0),
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.deepPurple,
                       ),
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.all(1.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: Container(
                           height: 190, // height of the Container widget
                           width: 150,
@@ -257,26 +275,19 @@ class _Dashboard extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
         title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(FontAwesomeIcons.trash),
-              onPressed: () {
-                //
-              }),
-        ],
       ),
       body: Container(
-        color: Color(0xffE5E5E5),
+        color: const Color(0xffE5E5E5),
         child: StaggeredGridView.count(
           crossAxisCount: 4,
           crossAxisSpacing: 12.0,
           mainAxisSpacing: 12.0,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(7.0),
               child: mychart1Items("Porcentagem de acurácia", "60.4%", ""),
             ),
             Padding(
@@ -292,11 +303,11 @@ class _Dashboard extends State<Dashboard> {
               child: myTextItems("Alunos", "200"),
             ),
             Padding(
-              padding: const EdgeInsets.all(1.0),
+              padding: const EdgeInsets.all(8.0),
               child: mychart2Items("Gráfico aluno x anos", "", ""),
             ),
           ],
-          staggeredTiles: [
+          staggeredTiles: const [
             StaggeredTile.extent(4, 250.0),
             StaggeredTile.extent(2, 250.0),
             StaggeredTile.extent(2, 120.0),
