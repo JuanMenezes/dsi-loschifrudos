@@ -1,26 +1,32 @@
 // ignore_for_file: sized_box_for_whitespace, unused_import, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'Menu.dart';
+import 'package:los_chifrudos/Telas/Menu.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+//TODO - trazer aqui o documento do firebase
+const score = 25;
 
 final List<Data> dataGraph = [
-  Data('2017', 30, Colors.green),
+  Data('2017', score, Colors.green),
   Data('2018', 24, Colors.red),
 ];
 
-class Dashboard extends StatefulWidget {
-  Dashboard({required this.title});
-  static String id = 'Dashboard';
+class DashboardEscolas extends StatefulWidget {
+  DashboardEscolas({required this.title});
+  static String id = 'DashboardEscolas';
 
   final String title;
 
   @override
-  _Dashboard createState() => _Dashboard();
+  _DashboardEscolas createState() => _DashboardEscolas();
 }
 
 class Data {
@@ -31,7 +37,7 @@ class Data {
   Data(this.ano, this.alunos, this.barColor);
 }
 
-class _Dashboard extends State<Dashboard> {
+class _DashboardEscolas extends State<DashboardEscolas> {
   final _auth = FirebaseAuth.instance;
 
   void getUsuario() async {
@@ -132,9 +138,10 @@ class _Dashboard extends State<Dashboard> {
     );
   }
 
-  Material mychart1Items(String title, String priceVal, String subtitle) {
+  Material mychart1Items(
+      String title, String priceVal, String subtitle, int score) {
     final List<Data> dataGraph = [
-      Data('2017', 30, Colors.green),
+      Data('2017', score, Colors.green),
       Data('2018', 24, Colors.red),
     ];
     List<charts.Series<Data, String>> series = [
@@ -208,7 +215,7 @@ class _Dashboard extends State<Dashboard> {
   Material mychart2Items(String title, String priceVal, String subtitle) {
     // é só editar aqui para o outro gráfico
     final List<Data> dataGraph = [
-      Data('2017', 30, Colors.green),
+      Data('2017', score, Colors.green),
       Data('2018', 24, Colors.red),
     ];
     List<charts.Series<Data, String>> series = [
@@ -271,43 +278,55 @@ class _Dashboard extends State<Dashboard> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container(
-        color: const Color(0xffE5E5E5),
-        child: StaggeredGridView.count(
-          crossAxisCount: 4,
-          crossAxisSpacing: 12.0,
-          mainAxisSpacing: 12.0,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(7.0),
-              child: mychart1Items("Porcentagem de acurácia", "60.4%", ""),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: myCircularItems("Investimento", "68 mil"),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: myTextItems("Funcionários", "60"),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: myTextItems("Alunos", "200"),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: mychart2Items("Gráfico aluno x anos", "", ""),
-            ),
-          ],
-          staggeredTiles: const [
-            StaggeredTile.extent(4, 250.0),
-            StaggeredTile.extent(2, 250.0),
-            StaggeredTile.extent(2, 120.0),
-            StaggeredTile.extent(2, 120.0),
-            StaggeredTile.extent(4, 250.0),
-          ],
-        ),
-      ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream:
+              //TODO aqui ele pega as variaveis do firebase certinho, so que ele so vai ate o documents
+              FirebaseFirestore.instance.collection('VariaveisML').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var tamanho = snapshot.data!.docs[0]['score2017'];
+              return Container(
+                color: const Color(0xffE5E5E5),
+                child: StaggeredGridView.count(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 12.0,
+                  mainAxisSpacing: 12.0,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: mychart1Items("Maior porcentagem 2017",
+                          tamanho.toString() + "%", "", tamanho),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: myCircularItems("Investimento", "68 mil"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: myTextItems("Funcionários", "60"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: myTextItems("Alunos", "200"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: mychart2Items("Gráfico aluno x anos", "", ""),
+                    ),
+                  ],
+                  staggeredTiles: const [
+                    StaggeredTile.extent(4, 250.0),
+                    StaggeredTile.extent(2, 250.0),
+                    StaggeredTile.extent(2, 120.0),
+                    StaggeredTile.extent(2, 120.0),
+                    StaggeredTile.extent(4, 250.0),
+                  ],
+                ),
+              );
+            } else {
+              return const Text('Loading...');
+            }
+          }),
     );
   }
 }
