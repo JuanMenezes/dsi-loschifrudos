@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'Telas/boas_vindas.dart';
 import 'Telas/cadastro.dart';
 import 'Telas/TelaEntrar.dart';
 import 'Telas/dashboard.dart';
+import 'dashboard_pages/escolas.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,11 +22,15 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
         ),
-        initialRoute: Dashboard.id,
+        initialRoute: HomeWelcome.id,
         routes: {
           Entrar.id: (context) => const Entrar(title: 'MeNota.Ai'),
           TelaCadastro.id: (context) => TelaCadastro(),
           Dashboard.id: (context) => Dashboard(title: "Dashboard"),
+          DashboardEscolas.id: (context) =>
+              DashboardEscolas(title: "Dashboarda das escolas"),
+          HomeWelcome.id: (context) =>
+              HomeWelcome(title: "Tela Inicial Explicando o App")
         });
   }
 }
