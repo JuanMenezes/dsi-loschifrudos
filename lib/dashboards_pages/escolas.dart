@@ -11,14 +11,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:los_chifrudos/Telas/Menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//TODO - trazer aqui o documento do firebase
-const score = 25;
-
-final List<Data> dataGraph = [
-  Data('2017', score, Colors.green),
-  Data('2018', 24, Colors.red),
-];
-
 class DashboardEscolas extends StatefulWidget {
   DashboardEscolas({required this.title});
   static String id = 'DashboardEscolas';
@@ -138,11 +130,11 @@ class _DashboardEscolas extends State<DashboardEscolas> {
     );
   }
 
-  Material mychart1Items(
-      String title, String priceVal, String subtitle, int score) {
+  Material mychart1Items(String title, String priceVal, String subtitle,
+      int score2017, int score2018) {
     final List<Data> dataGraph = [
-      Data('2017', score, Colors.green),
-      Data('2018', 24, Colors.red),
+      Data('2017', score2017, Colors.green),
+      Data('2018', score2018, Colors.red),
     ];
     List<charts.Series<Data, String>> series = [
       charts.Series(
@@ -212,11 +204,12 @@ class _DashboardEscolas extends State<DashboardEscolas> {
     );
   }
 
-  Material mychart2Items(String title, String priceVal, String subtitle) {
+  Material mychart2Items(String title, String priceVal, String subtitle,
+      int score2017, int score2018) {
     // é só editar aqui para o outro gráfico
     final List<Data> dataGraph = [
-      Data('2017', score, Colors.green),
-      Data('2018', 24, Colors.red),
+      Data('2017', score2017, Colors.green),
+      Data('2018', score2018, Colors.red),
     ];
     List<charts.Series<Data, String>> series = [
       charts.Series(
@@ -276,15 +269,17 @@ class _DashboardEscolas extends State<DashboardEscolas> {
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Situação das Escolas"),
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream:
-              //TODO aqui ele pega as variaveis do firebase certinho, so que ele so vai ate o documents
               FirebaseFirestore.instance.collection('VariaveisML').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              var tamanho = snapshot.data!.docs[0]['score2017'];
+              var score2017 = snapshot.data!.docs[0]['score2017'];
+              var score2018 = snapshot.data!.docs[0]['score2018'];
+              var mediaInvestimento2017 =
+                  snapshot.data!.docs[0]['mediaInvestimento2017'];
               return Container(
                 color: const Color(0xffE5E5E5),
                 child: StaggeredGridView.count(
@@ -294,12 +289,13 @@ class _DashboardEscolas extends State<DashboardEscolas> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(7.0),
-                      child: mychart1Items("Maior porcentagem 2017",
-                          tamanho.toString() + "%", "", tamanho),
+                      child: mychart1Items("Pontuação do Algoritmo por ano",
+                          score2017.toString() + "%", "", score2017, score2018),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: myCircularItems("Investimento", "68 mil"),
+                      padding: const EdgeInsets.all(5.0),
+                      child: myCircularItems(
+                          "Média PDDE", "" + mediaInvestimento2017.toString()),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 8.0),
@@ -311,7 +307,8 @@ class _DashboardEscolas extends State<DashboardEscolas> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: mychart2Items("Gráfico aluno x anos", "", ""),
+                      child: mychart2Items(
+                          "Gráfico aluno x anos", "", "", score2017, score2018),
                     ),
                   ],
                   staggeredTiles: const [
