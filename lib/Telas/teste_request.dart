@@ -5,15 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<Album> createAlbum(String title) async {
-  final response = await http.post(
-    Uri.parse('https://5a2c-34-105-45-42.ngrok.io'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      '/classify_student': title,
-    }),
-  );
+  final response = await http.post(Uri.http(
+      "5a2c-34-105-45-42.ngrok.io", "/classify_student", {"student": "juan"}));
 
   if (response.statusCode == 201 || response.statusCode == 404) {
     // If the server did return a 201 CREATED response,
