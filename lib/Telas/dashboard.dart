@@ -15,7 +15,6 @@ final List<Data> dataGraph = [
   Data('2018', 24, Colors.red),
 ];
 
-
 class Dashboard extends StatefulWidget {
   Dashboard({required this.title});
   static String id = 'Dashboard';
@@ -37,16 +36,15 @@ class Data {
 class _Dashboard extends State<Dashboard> {
   final _auth = FirebaseAuth.instance;
 
-
-  void getUsuario () async {
+  void getUsuario() async {
     try {
-      final user =  _auth.currentUser!;
+      final user = _auth.currentUser!;
       print(user.email);
     } catch (e) {
-      print (e);
+      print(e);
     }
-
   }
+
   Material myTextItems(String title, String subtitle) {
     return Material(
       color: Colors.white,

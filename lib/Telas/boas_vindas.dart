@@ -34,22 +34,45 @@ class _HomeWelcome extends State<HomeWelcome> {
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(""),
       ),
       body: Container(
-        color: const Color(0xffE5E5E5),
-        child: StaggeredGridView.count(
-          crossAxisCount: 4,
-          crossAxisSpacing: 12.0,
-          mainAxisSpacing: 12.0,
-          children: <Widget>[],
-          staggeredTiles: const [
-            StaggeredTile.extent(4, 250.0),
-            StaggeredTile.extent(2, 250.0),
-            StaggeredTile.extent(2, 120.0),
-            StaggeredTile.extent(2, 120.0),
-            StaggeredTile.extent(4, 250.0),
+        color: Colors.deepPurple,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(
+                child: Text(
+              'Bem vindo ao MeNota.Ai',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30,
+                foreground: Paint()
+                  ..style = PaintingStyle.fill
+                  ..strokeWidth = 6
+                  ..color = Colors.white,
+              ),
+            )),
+            Center(
+                child: Text('Para seguir, por favor faça cadastro ou login',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      foreground: Paint()
+                        ..style = PaintingStyle.fill
+                        ..strokeWidth = 6
+                        ..color = Colors.white,
+                    ))),
           ],
+          //staggeredTiles: const [
+          //StaggeredTile.extent(4, 250.0),
+          //StaggeredTile.extent(2, 250.0),
+          //StaggeredTile.extent(2, 120.0),
+          //StaggeredTile.extent(2, 120.0),
+          //StaggeredTile.extent(4, 250.0),
+          //
+          //],
         ),
       ),
     );

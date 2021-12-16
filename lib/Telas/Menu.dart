@@ -19,11 +19,11 @@ class NavDrawer extends StatelessWidget {
           children: <Widget>[
             const DrawerHeader(
               child: Text(
-                'Side menu',
+                'MeNota.Ai',
                 style: TextStyle(color: Colors.white, fontSize: 25),
               ),
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.purple,
               ),
             ),
             ListTile(
@@ -56,11 +56,11 @@ class NavDrawer extends StatelessWidget {
           children: <Widget>[
             const DrawerHeader(
               child: Text(
-                'Side menu',
+                'MeNota.Ai',
                 style: TextStyle(color: Colors.white, fontSize: 25),
               ),
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.deepPurple,
               ),
             ),
             ListTile(

@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           TelaCadastro.id: (context) => TelaCadastro(),
           Dashboard.id: (context) => Dashboard(title: "Dashboard"),
           DashboardEscolas.id: (context) =>
-              DashboardEscolas(title: "Dashboarda das escolas"),
+              DashboardEscolas(title: "Dashboard das escolas"),
           HomeWelcome.id: (context) =>
               HomeWelcome(title: "Tela Inicial Explicando o App")
         });
