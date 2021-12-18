@@ -7,12 +7,15 @@ class statsgrid extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.25,
       color: Colors.deepPurple,
+      //PRECISA DE CHILD STREAM BUILDER AQUI PRA FUNCIONAR , MAS ELE DEPENDE DE UM PARAMETRO STREAM, QUE NO CASO É A INSTANCE , OU SEJA, ONDE ELE VAI BUSACR O DADO NO FIREBASE
       child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('Aprovgeral2017')
               .snapshots(),
           builder: (context, snapshot) {
+            //AQUI É A VERIFICAFAO SE TEM ALGUM DADO LA DAQUELA DOC
             if (snapshot.hasData) {
+              //O DOCS[0] EH REFERENTE A PRIMEIRA POSICAO DO DOCUMENTO OU SEJA O "GERAL", CASO QUISER UTILIZAR O "PROC" USE O DOCS[1] E POR AI VAI...
               var total2017 = snapshot.data!.docs[0]['Total'];
               return Column(children: <Widget>[
                 Flexible(
@@ -26,7 +29,10 @@ class statsgrid extends StatelessWidget {
                     child: Row(
                   children: <Widget>[
                     _buildcard(
-                        'Total de alunos', total2017.toString(), Colors.orange),
+                        //AI NO FINAL É CHAMAR ELE , MAS LEMBRANDO QUE ESSA LIB PEDE QUE SEJA UMA STRING, E O VALOR DO FIREBASE EH NUMERICO ENTÃO BASTA CHAMAR O toString() no final de tudo
+                        'Total de alunos',
+                        total2017.toString(),
+                        Colors.orange),
                     _buildcard("Total de Escolas", '300', Colors.lightBlue),
                   ],
                 ))
