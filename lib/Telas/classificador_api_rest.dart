@@ -134,14 +134,51 @@ class _RequestApiState extends State<RequestApi> {
   }
 
   FutureBuilder<AlgoritmoCollab> buildFutureBuilder() {
+    Size size = MediaQuery.of(context).size;
     return FutureBuilder<AlgoritmoCollab>(
       future: _futureAlgoritmoCollab,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          //AQUI É O RETORNO DE QUANDO ELE EXIBE O TEXTO QUE O SERVIDOR TROUXE COMO RESPOSTA
-          return Column(
-            children: [Text(snapshot.data!.resultado)],
-          );
+          if (snapshot.data!.resultado ==
+              "segundo nosso modelo sua escola foi classificada como APROVADA!") {
+            return Column(
+              children: <Widget>[
+                const SizedBox(height: 70),
+                Center(
+                  child: Image.asset(
+                    'lib/assets/images/approve.png',
+                    width: size.width * .30,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Text("segundo nosso modelo sua escola foi classificada como " +
+                    snapshot.data!.resultado)
+              ],
+            );
+          } else {
+            return Column(
+              children: <Widget>[
+                const SizedBox(height: 70),
+                Center(
+                  child: Image.asset(
+                    'lib/assets/images/denied.png',
+                    width: size.width * .30,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Text(
+                  "\nSegundo nosso modelo sua escola foi classificada como " +
+                      snapshot.data!.resultado,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                    "\n\nisso significa que a entrada de dados fornecida pode ter sido reprovada corretamente em 73% dos casos")
+              ],
+            );
+          }
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
