@@ -4,10 +4,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<AlgoritmoCollab> createAlgoritmoCollab(String valorTotal, String quadra,
-    String biblioteca, String refeitorio, String internet) async {
-  final response = await http
-      .post(Uri.http("12d7-34-74-10-207.ngrok.io", "/classifica_escola", {
+Future<AlgoritmoCollab> createAlgoritmoCollab(
+    String uri,
+    String valorTotal,
+    String quadra,
+    String biblioteca,
+    String refeitorio,
+    String internet) async {
+  final response = await http.post(Uri.http(uri, "/classifica_escola", {
     "valorTotalParam": valorTotal,
     "quadraParam": quadra,
     "bibliotecaParam": biblioteca,
@@ -25,13 +29,13 @@ Future<AlgoritmoCollab> createAlgoritmoCollab(String valorTotal, String quadra,
 }
 
 class AlgoritmoCollab {
-  final String title;
+  final String resultado;
 
-  AlgoritmoCollab({required this.title});
+  AlgoritmoCollab({required this.resultado});
 
   factory AlgoritmoCollab.fromJson(Map<String, dynamic> json) {
     return AlgoritmoCollab(
-      title: json['escolaModelo_name'],
+      resultado: json['escolaModelo'],
     );
   }
 }
@@ -51,6 +55,7 @@ class _TesteRequestState extends State<TesteRequest> {
   final TextEditingController bibliotecaController = TextEditingController();
   final TextEditingController refeitorioController = TextEditingController();
   final TextEditingController internetController = TextEditingController();
+  final TextEditingController uriController = TextEditingController();
 
   Future<AlgoritmoCollab>? _futureAlgoritmoCollab;
 
@@ -59,7 +64,7 @@ class _TesteRequestState extends State<TesteRequest> {
     return MaterialApp(
       title: 'Classificador de aprovação',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: Scaffold(
         appBar: AppBar(
@@ -80,6 +85,11 @@ class _TesteRequestState extends State<TesteRequest> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        TextFormField(
+          controller: uriController,
+          decoration:
+              const InputDecoration(hintText: 'Digite o URI da hospedagem'),
+        ),
         TextFormField(
           controller: valorTotalController,
           decoration:
@@ -109,6 +119,7 @@ class _TesteRequestState extends State<TesteRequest> {
           onPressed: () {
             setState(() {
               _futureAlgoritmoCollab = createAlgoritmoCollab(
+                  uriController.text,
                   valorTotalController.text,
                   quadraController.text,
                   bibliotecaController.text,
@@ -129,7 +140,7 @@ class _TesteRequestState extends State<TesteRequest> {
         if (snapshot.hasData) {
           //AQUI É O RETORNO DE QUANDO ELE EXIBE O TEXTO QUE O SERVIDOR TROUXE COMO RESPOSTA
           return Column(
-            children: [Text(snapshot.data!.title)],
+            children: [Text(snapshot.data!.resultado)],
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
