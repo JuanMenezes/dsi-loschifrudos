@@ -1,12 +1,9 @@
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:los_chifrudos/widgets/statsgrid.dart';
 import 'package:los_chifrudos/widgets/widgets.dart';
 import 'Menu.dart';
-import 'package:flutter/widgets.dart';
+
 
 class aprovacao extends StatefulWidget {
   @override
