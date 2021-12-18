@@ -40,16 +40,16 @@ class AlgoritmoCollab {
   }
 }
 
-class TesteRequest extends StatefulWidget {
-  const TesteRequest({Key? key}) : super(key: key);
+class RequestApi extends StatefulWidget {
+  const RequestApi({Key? key}) : super(key: key);
 
   @override
-  _TesteRequestState createState() {
-    return _TesteRequestState();
+  _RequestApiState createState() {
+    return _RequestApiState();
   }
 }
 
-class _TesteRequestState extends State<TesteRequest> {
+class _RequestApiState extends State<RequestApi> {
   final TextEditingController valorTotalController = TextEditingController();
   final TextEditingController quadraController = TextEditingController();
   final TextEditingController bibliotecaController = TextEditingController();
