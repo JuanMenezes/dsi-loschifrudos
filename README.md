@@ -1,16 +1,7 @@
-# los_chifrudos
+# los_chifrudos apresenta
 
-A new Flutter project.
+## Me Nota AI
 
-## Getting Started
+As questões por trás da educação se mostram cada vez mais presentes em relação aos efeitos negativos que a sociedade enfrenta. O presente aplicativo busca analisar os dados do FNDE e do Censo Escolar da cidade do Recife com finalidade de auxiliar nas tomadas de decisão na alocação de recursos públicos na educação. Dessa forma, a fim de integrar gestores e alunos, utilizou-se algoritmos de machine learning para análise de correlações entre valor repassado por determinado programa e seu possível impacto no censo escolar. E isso tudo sendo exibido em um APP interativo e boa usabilidade.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Esse projeto foi elaborado para a disciplina de DSI 2020.2 da UFRPE.
