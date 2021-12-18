@@ -21,7 +21,8 @@ dependencies:
   flutter_slider_drawer: ^2.0.0
   bubble_tab_indicator: ^0.1.4
   fl_chart: ^0.9.4
-
+  http:
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
