@@ -27,25 +27,23 @@ class NavDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
+                leading: const Icon(Icons.bar_chart),
+                title: const Text('Dashboards Situação Escolas'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await Navigator.pushNamed(
+                    context, DashboardEscolas.id
+                  );
+                }),
+            ListTile(
               leading: const Icon(Icons.exit_to_app),
               title: const Text('Sair'),
               onTap: () => {
                 _auth.signOut(),
-                Navigator.pushNamed(context, HomeWelcome.id)
+                Navigator.pushNamed(context, HomeWelcome.id),
+                Navigator.pop(context),
               },
             ),
-            ListTile(
-                leading: const Icon(Icons.bar_chart),
-                title: const Text('Dashboards Situação Escolas'),
-                onTap: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DashboardEscolas(
-                              title: '',
-                            )),
-                  );
-                }),
           ],
         ),
       );
@@ -66,12 +64,10 @@ class NavDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.input),
               title: const Text('Entrar/Cadastro'),
-              onTap: () => {Navigator.pushNamed(context, Entrar.id)},
-            ),
-            ListTile(
-              leading: const Icon(Icons.verified_user),
-              title: const Text('Profile'),
-              onTap: () => {Navigator.of(context).pop()},
+              onTap: () => {
+                Navigator.pop(context),
+                Navigator.pushNamed(context, Entrar.id)
+              },
             ),
           ],
         ),

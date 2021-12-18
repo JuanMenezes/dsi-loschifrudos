@@ -23,10 +23,12 @@ class _Entrar extends State<Entrar> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.purple,
-        body: Padding(
-          padding: const EdgeInsets.all(9),
-          child: Center(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left:4, top:10, right: 4, bottom: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
                   autofocus: true,
@@ -53,43 +55,40 @@ class _Entrar extends State<Entrar> {
                       labelStyle: TextStyle(color: Colors.white)),
                 ),
                 const Divider(),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            try {
-                              await _auth.signInWithEmailAndPassword (email: email, password: senha);
-                              Navigator.pushNamed(context, Dashboard.id);
-                            } on Exception catch (e) {
-                              print (e);
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              fixedSize: const Size(210, 40),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              primary: Colors.white),
-                          child: const Text(
-                            "Entrar",
-                            style: TextStyle(color: Colors.purple),
-                          ),
-                        )),
-                    Expanded(
-                      child: ElevatedButton(
-                        child: const Text("Cadastro",
-                            style: TextStyle(color: Colors.purple)),
-                        onPressed: () => {
-                          Navigator.pushNamed(context, TelaCadastro.id)
-                        },
-                        style: ElevatedButton.styleFrom(
-                            fixedSize: const Size(210, 30),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50)),
-                            primary: Colors.white),
-                      ),
-                    ),
-                  ],
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(160, 30),
+
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      primary: Colors.white
+                  ),
+                  onPressed: () async {
+                    try {
+                      await _auth.signInWithEmailAndPassword (email: email, password: senha);
+                      Navigator.pushNamed(context, Dashboard.id);
+                      Navigator.pop(context);
+                    } on Exception catch (e) {
+                      print (e);
+                    }
+                  },
+                  child: const Text(
+                    "Entrar",
+                    style: TextStyle(color: Colors.purple),
+                  ),
+                ),
+                ElevatedButton(
+                  child: const Text("Cadastro",
+                      style: TextStyle(color: Colors.purple)),
+                  onPressed: () => {
+                    Navigator.pushNamed(context, TelaCadastro.id),
+                    Navigator.pop(context)
+                  },
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(160, 30),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      primary: Colors.white),
                 ),
               ],
             ),

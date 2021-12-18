@@ -14,7 +14,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class DashboardEscolas extends StatefulWidget {
   DashboardEscolas({required this.title});
   static String id = 'DashboardEscolas';
-
   final String title;
 
   @override
@@ -30,17 +29,6 @@ class Data {
 }
 
 class _DashboardEscolas extends State<DashboardEscolas> {
-  final _auth = FirebaseAuth.instance;
-
-  void getUsuario() async {
-    try {
-      final user = _auth.currentUser!;
-      print(user.email);
-    } catch (e) {
-      print(e);
-    }
-  }
-
   Material myTextItems(String title, String subtitle) {
     return Material(
       color: Colors.white,
@@ -269,7 +257,7 @@ class _DashboardEscolas extends State<DashboardEscolas> {
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text("Situação das Escolas"),
+        title: const Text("Situação das Escolas"),
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream:
