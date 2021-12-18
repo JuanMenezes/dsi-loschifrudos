@@ -70,18 +70,22 @@ class _aprovchartState extends State {
               aspectRatio: 1,
               child: PieChart(
                 PieChartData(
-                    pieTouchData:
-                        PieTouchData(touchCallback: (PieTouchResponse) {
+                    pieTouchData: PieTouchData(
+                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
                       setState(() {
-                        if (PieTouchResponse.touchInput is FlLongPressEnd ||
-                            PieTouchResponse.touchInput is FlPanEnd) {
+                        if (!event.isInterestedForInteractions ||
+                            pieTouchResponse == null ||
+                            pieTouchResponse.touchedSection == null) {
                           touchedIndex = -1;
-                        } else {
-                          touchedIndex = PieTouchResponse.touchedSectionIndex;
+                          return;
                         }
+                        touchedIndex = pieTouchResponse
+                            .touchedSection!.touchedSectionIndex;
                       });
                     }),
-                    borderData: FlBorderData(show: false),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
                     sectionsSpace: 0,
                     centerSpaceRadius: 40,
                     sections: showingsections()),
