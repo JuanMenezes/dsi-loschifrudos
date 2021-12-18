@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.los_chifrudos">
+  <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="los_chifrudos"
         android:icon="@mipmap/ic_launcher">

@@ -1,11 +1,14 @@
 // ignore_for_file: file_names, unused_import
 import 'package:flutter/material.dart';
 import 'package:los_chifrudos/Telas/boas_vindas.dart';
+import 'package:los_chifrudos/Telas/classificador_api_rest.dart';
 import 'package:los_chifrudos/dashboard_pages/escolas.dart';
 import 'cadastro.dart';
 import 'TelaEntrar.dart';
 import 'aprovacao_escolar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'classificacao.dart';
 
 // ignore: use_key_in_widget_constructors
 class NavDrawer extends StatelessWidget {
@@ -53,7 +56,16 @@ class NavDrawer extends StatelessWidget {
                 onTap: () async {
                   await Navigator.push(context,
                       MaterialPageRoute(builder: (context) => aprovacao()));
-                })
+                }),
+            ListTile(
+                leading: const Icon(Icons.class__outlined),
+                title: const Text('Algoritmo Classificação'),
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RequestApi()),
+                  );
+                }),
           ],
         ),
       );

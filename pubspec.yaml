@@ -22,6 +22,8 @@ dependencies:
   bubble_tab_indicator: ^0.1.4
   fl_chart: ^0.40.6
 
+  http:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
