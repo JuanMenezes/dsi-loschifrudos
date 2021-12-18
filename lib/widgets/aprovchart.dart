@@ -1,6 +1,5 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:fl_chart/fl_chart.dart';
 
 class Indicator extends StatelessWidget {
@@ -49,6 +48,7 @@ class aprovchart extends StatefulWidget {
   _aprovchartState createState() => _aprovchartState();
 }
 
+// ignore: camel_case_types
 class _aprovchartState extends State {
   late int touchedIndex;
   @override

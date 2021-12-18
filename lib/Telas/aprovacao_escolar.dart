@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:los_chifrudos/widgets/statsgrid.dart';
-import 'package:los_chifrudos/widgets/widgets.dart';
 import 'Menu.dart';
 import 'package:flutter/widgets.dart';
 
@@ -34,10 +33,10 @@ class _aprovacaoState extends State<aprovacao> {
               child: statsgrid(),
             ),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.only(top: 20.0),
-            sliver: SliverToBoxAdapter(child: aprovchart()),
-          )
+          // SliverPadding(
+          //   padding: const EdgeInsets.only(top: 20.0),
+          //   sliver: SliverToBoxAdapter(child: aprovchart()),
+          // )
         ],
       ),
     );
