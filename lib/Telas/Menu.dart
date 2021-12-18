@@ -4,6 +4,7 @@ import 'package:los_chifrudos/Telas/boas_vindas.dart';
 import 'package:los_chifrudos/dashboard_pages/escolas.dart';
 import 'cadastro.dart';
 import 'TelaEntrar.dart';
+import 'aprovacao_escolar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -46,6 +47,13 @@ class NavDrawer extends StatelessWidget {
                             )),
                   );
                 }),
+            ListTile(
+                leading: const Icon(Icons.bar_chart),
+                title: const Text('Aprovação escolar'),
+                onTap: () async {
+                  await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => aprovacao()));
+                })
           ],
         ),
       );
