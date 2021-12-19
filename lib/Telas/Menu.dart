@@ -7,6 +7,7 @@ import 'package:los_chifrudos/Telas/classificador_api_rest.dart';
 import 'package:los_chifrudos/dashboard_pages/escolas.dart';
 import 'cadastro.dart';
 import 'TelaEntrar.dart';
+import 'aprovacao_escolar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'classificacao.dart';
@@ -38,6 +39,13 @@ class NavDrawer extends StatelessWidget {
                   Navigator.pushNamed(
                     context, DashboardEscolas.id
                   ),
+                }),
+            ListTile(
+                leading: const Icon(Icons.bar_chart),
+                title: const Text('Aprovação escolar'),
+                onTap: () async {
+                  await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => aprovacao()));
                 }),
             ListTile(
                 leading: const Icon(Icons.class__outlined),
