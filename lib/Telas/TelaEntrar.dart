@@ -67,7 +67,6 @@ class _Entrar extends State<Entrar> {
                     try {
                       await _auth.signInWithEmailAndPassword (email: email, password: senha);
                       Navigator.pushNamed(context, Dashboard.id);
-                      Navigator.pop(context);
                     } on Exception catch (e) {
                       print (e);
                     }

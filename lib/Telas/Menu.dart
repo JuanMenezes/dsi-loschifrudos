@@ -1,4 +1,6 @@
 // ignore_for_file: file_names, unused_import
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:los_chifrudos/Telas/boas_vindas.dart';
 import 'package:los_chifrudos/Telas/classificador_api_rest.dart';
@@ -6,13 +8,12 @@ import 'package:los_chifrudos/dashboard_pages/escolas.dart';
 import 'cadastro.dart';
 import 'TelaEntrar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'classificacao.dart';
 
 // ignore: use_key_in_widget_constructors
 class NavDrawer extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     if (_auth.currentUser != null) {
@@ -32,32 +33,11 @@ class NavDrawer extends StatelessWidget {
             ListTile(
                 leading: const Icon(Icons.bar_chart),
                 title: const Text('Dashboards Situação Escolas'),
-                onTap: () async {
-                  Navigator.pop(context);
-                  await Navigator.pushNamed(
+                onTap: ()  => {
+                  Navigator.pop(context),
+                  Navigator.pushNamed(
                     context, DashboardEscolas.id
-                  );
-                }),
-            ListTile(
-              leading: const Icon(Icons.exit_to_app),
-              title: const Text('Sair'),
-              onTap: () => {
-                _auth.signOut(),
-                Navigator.pushNamed(context, HomeWelcome.id),
-                Navigator.pop(context),
-              },
-            ),
-            ListTile(
-                leading: const Icon(Icons.bar_chart),
-                title: const Text('Dashboards Situação Escolas'),
-                onTap: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DashboardEscolas(
-                              title: '',
-                            )),
-                  );
+                  ),
                 }),
             ListTile(
                 leading: const Icon(Icons.class__outlined),
@@ -68,6 +48,14 @@ class NavDrawer extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const RequestApi()),
                   );
                 }),
+            ListTile(
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('Sair'),
+              onTap: () => {
+                _auth.signOut(),
+                Navigator.popUntil(context, ModalRoute.withName(HomeWelcome.id)),
+              },
+            ),
           ],
         ),
       );
