@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class statsgrid extends StatelessWidget {
+class gridbairro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.35,
       color: Colors.deepPurple,
       child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
@@ -13,27 +13,30 @@ class statsgrid extends StatelessWidget {
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              var totalalu = snapshot.data!.docs[3]['alunos'];
-              var totalaprov = snapshot.data!.docs[2]['Aprovados'];
-              var totalrep = snapshot.data!.docs[2]['Reprovados'];
-              var totalesc = snapshot.data!.docs[3]['Escolas'];
+              var totalbai = snapshot.data!.docs[0]['total'];
+              var maiorap = snapshot.data!.docs[0]['Maiorap'];
+              var maiorrep = snapshot.data!.docs[0]['mairorep'];
+              var baiap = snapshot.data!.docs[0]['bairap'];
+              var bairep = snapshot.data!.docs[0]['bairrep'];
               return Column(children: <Widget>[
                 Flexible(
                     child: Row(
                   children: <Widget>[
-                    _buildcard('Taxa de Aprovação', totalaprov.toString() + '%',
-                        Colors.green),
-                    _buildcard("Taxa de Reprovação", totalrep.toString() + '%',
-                        Colors.red)
+                    _buildcard('Nº Total de bairros', totalbai.toString(),
+                        Colors.lightBlue)
                   ],
                 )),
                 Flexible(
                     child: Row(
                   children: <Widget>[
                     _buildcard(
-                        'Total de alunos', totalalu.toString(), Colors.orange),
-                    _buildcard("Total de Escolas", totalesc.toString(),
-                        Colors.lightBlue),
+                        'Maior taxa de aprovação',
+                        baiap.toString() + ' - ' + maiorap.toString() + '%',
+                        Colors.green),
+                    _buildcard(
+                        "Maior taxa de reprovação",
+                        bairep.toString() + ' - ' + maiorrep.toString() + '%',
+                        Colors.red),
                   ],
                 ))
               ]);
@@ -59,15 +62,17 @@ class statsgrid extends StatelessWidget {
           children: <Widget>[
             Text(
               title,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 15.0,
                   fontWeight: FontWeight.w600),
             ),
             Text(count,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 30.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.w600))
           ]),
     ));

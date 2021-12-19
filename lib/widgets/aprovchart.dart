@@ -1,48 +1,9 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-
-class Indicator extends StatelessWidget {
-  final Color color;
-  final String text;
-  final bool isSquare;
-  final double size;
-  final Color textColor;
-
-  const Indicator({
-    Key? key,
-    required this.color,
-    required this.text,
-    required this.isSquare,
-    this.size = 16,
-    this.textColor = const Color(0xff505050),
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
-            color: color,
-          ),
-        ),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          text,
-          style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
-        )
-      ],
-    );
-  }
-}
+import 'dart:ui';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'widgets.dart';
 
 class aprovchart extends StatefulWidget {
   @override
@@ -50,92 +11,137 @@ class aprovchart extends StatefulWidget {
 }
 
 class _aprovchartState extends State {
-  late int touchedIndex;
+  int touchedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 350.0,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
+        height: 350.0,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
         ),
-      ),
-      child: Row(
-        children: <Widget>[
-          const SizedBox(height: 18),
-          Expanded(
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: PieChart(
-                PieChartData(
-                    pieTouchData:
-                        PieTouchData(touchCallback: (PieTouchResponse) {
-                      setState(() {
-                        if (PieTouchResponse.touchInput is FlLongPressEnd ||
-                            PieTouchResponse.touchInput is FlPanEnd) {
-                          touchedIndex = -1;
-                        } else {
-                          touchedIndex = PieTouchResponse.touchedSectionIndex;
-                        }
-                      });
-                    }),
-                    borderData: FlBorderData(show: false),
-                    sectionsSpace: 0,
-                    centerSpaceRadius: 40,
-                    sections: showingsections()),
-              ),
-            ),
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const <Widget>[
-              Indicator(
-                color: Colors.green,
-                text: 'Aprovados',
-                isSquare: true,
-              ),
-              SizedBox(height: 4),
-              Indicator(color: Colors.red, text: 'Reprovados', isSquare: true),
-              SizedBox(height: 4),
-              Indicator(
-                  color: Colors.black54,
-                  text: 'Não contabilizados',
-                  isSquare: true),
-              SizedBox(height: 4),
-            ],
-          ),
-          const SizedBox(width: 18),
-        ],
-      ),
-    );
+        child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('Aprovgeral2017')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                var porcaprov = snapshot.data!.docs[2]['Aprovados'];
+                var porcrep = snapshot.data!.docs[2]['Reprovados'];
+                var porcout = snapshot.data!.docs[2]['Outros'];
+                return Column(children: <Widget>[
+                  const SizedBox(
+                    height: 28,
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Indicator(
+                        color: const Color(0xff13d38e),
+                        text: 'Aprovados',
+                        isSquare: false,
+                        size: touchedIndex == 2 ? 18 : 16,
+                        textColor:
+                            touchedIndex == 2 ? Colors.black : Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Indicator(
+                          color: Colors.redAccent,
+                          text: 'Reprovados',
+                          isSquare: false,
+                          size: touchedIndex == 0 ? 18 : 16,
+                          textColor:
+                              touchedIndex == 0 ? Colors.black : Colors.grey),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Indicator(
+                        color: const Color(0xfff8b250),
+                        text: 'Não contabilizado',
+                        isSquare: false,
+                        size: touchedIndex == 1 ? 18 : 16,
+                        textColor:
+                            touchedIndex == 1 ? Colors.black : Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      SizedBox(
+                        height: 14,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 0,
+                  ),
+                  Expanded(
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: PieChart(
+                        PieChartData(
+                            pieTouchData: PieTouchData(touchCallback:
+                                (FlTouchEvent event, pieTouchResponse) {
+                              setState(() {
+                                if (!event.isInterestedForInteractions ||
+                                    pieTouchResponse == null ||
+                                    pieTouchResponse.touchedSection == null) {
+                                  touchedIndex = -1;
+                                  return;
+                                }
+                                touchedIndex = pieTouchResponse
+                                    .touchedSection!.touchedSectionIndex;
+                              });
+                            }),
+                            borderData: FlBorderData(
+                              show: false,
+                            ),
+                            sectionsSpace: 0,
+                            centerSpaceRadius: 0,
+                            sections: showingSections(
+                                MediaQuery.of(context).size.width,
+                                porcaprov,
+                                porcrep,
+                                porcout)),
+                      ),
+                    ),
+                  ),
+                ]);
+              } else {
+                return const Text('Loading...');
+              }
+            }));
   }
 
-  List<PieChartSectionData> showingsections() {
-    return List.generate(4, (i) {
+  List<PieChartSectionData> showingSections(
+      double screenWidth, var ap, var rep, var out) {
+    double radius = screenWidth / 3.5;
+    return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
+      final fontSize = isTouched ? 20.0 : 16.0;
+      final Opacity = isTouched ? 1.0 : 0.6;
       switch (i) {
         case 0:
           return PieChartSectionData(
-              color: Colors.greenAccent,
-              value: 90,
-              title: '90%',
-              radius: radius,
-              titleStyle: TextStyle(
+            color: Colors.redAccent.withOpacity(Opacity),
+            value: rep,
+            title: rep.toString() + '%',
+            radius: radius,
+            titleStyle: TextStyle(
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ));
+                color: const Color(0xffffffff)),
+          );
         case 1:
           return PieChartSectionData(
-            color: Colors.redAccent,
-            value: 7,
-            title: '7%',
+            color: const Color(0xfff8b250).withOpacity(Opacity),
+            value: double.parse(out.toString()),
+            title: out.toString() + '%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -144,9 +150,9 @@ class _aprovchartState extends State {
           );
         case 2:
           return PieChartSectionData(
-            color: Colors.yellow[400],
-            value: 3,
-            title: '3%',
+            color: const Color(0xff13d38e).withOpacity(Opacity),
+            value: double.parse(ap.toString()),
+            title: ap.toString() + '%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
