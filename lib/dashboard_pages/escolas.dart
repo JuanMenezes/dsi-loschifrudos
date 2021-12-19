@@ -278,6 +278,7 @@ class _DashboardEscolas extends State<DashboardEscolas> {
             if (snapshot.hasData) {
               var score2017 = snapshot.data!.docs[0]['score2017'];
               var score2018 = snapshot.data!.docs[0]['score2018'];
+              var totalAlunos = snapshot.data!.docs[0]['totalAlunos'];
               var mediaInvestimento2017 =
                   snapshot.data!.docs[0]['mediaInvestimento2017'];
               return Container(
@@ -299,11 +300,11 @@ class _DashboardEscolas extends State<DashboardEscolas> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 8.0),
-                      child: myTextItems("Funcionários", "60"),
+                      child: myTextItems("Melhor acuracia", "2017"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 8.0),
-                      child: myTextItems("Alunos", "200"),
+                      child: myTextItems("Alunos", totalAlunos.toString()),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),

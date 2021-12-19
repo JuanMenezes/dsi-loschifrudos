@@ -40,7 +40,7 @@ class NavDrawer extends StatelessWidget {
             ),
             ListTile(
                 leading: const Icon(Icons.bar_chart),
-                title: const Text('Dashboards Situação Escolas'),
+                title: const Text('Situação Escolas'),
                 onTap: () async {
                   await Navigator.push(
                     context,
